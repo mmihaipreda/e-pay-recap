@@ -1,4 +1,4 @@
-#E-pay Revision
+# E-pay Revision
 
 ## 1) Code using javacard API for creating a dual signature.
 
@@ -137,6 +137,12 @@ Apdu.setOutgoingAndSend(mVerify, (short) 0);
 ```
 
 ---
+
+![Page 1](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_001.png)
+![Page 2](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_002.png)
+![Page 3](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_003.png)
+![Page 4](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_004.png)
+![Page 5](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_005.png)
 
 <object data="https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/E%20Pay%20Course%20FULL.pdf" type="application/pdf" width="700px" height="700px">
     <embed src="https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/E%20Pay%20Course%20FULL.pdf">
