@@ -12,32 +12,32 @@
 
 #### Applet steps:
 
-![APDU Structure](appletsteps)
+![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/Applet%20steps.png)
 
 ---
 
 Constraints:
 
-![APDU Structure](JCVMlimitations)
-![APDU Structure](framework1)
+![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JC%20VM%20limitations.png)
+![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/framework1.png)
 
 ---
 
 #### Java Card API
 
-![APDU Structure](framework2)
+![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/framework2.png)
 
 ##### Java Card API – javacard.framework.\*
 
-![APDU Structure](framework3)
+![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/framework3.png)
 
 ##### Java Card API – javacard.framework.service.\*
 
-![APDU Structure](framework4)
+![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/framework4.png)
 
 ##### Java Card API – javacard.security.\*
 
-![APDU Structure](framework5)
+![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/framework5.png)
 
 ---
 
