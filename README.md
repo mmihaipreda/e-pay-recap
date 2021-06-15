@@ -1001,13 +1001,178 @@ public class _05_JCAppMAC extends Applet {
 
 ## 6) DES
 
-#### 6.1 \_05_JCAppDES.java
+#### 6.1 \_06_JCAppDES.java
+
+```
+/**
+ * Copyright (c) 1998, 2021, Oracle and/or its affiliates. All rights reserved.
+ *
+ */
+
+package com.recap;
+
+import javacard.framework.*;
+import javacard.security.DESKey;
+import javacard.security.KeyBuilder;
+import javacardx.annotations.*;
+import javacardx.crypto.Cipher;
+
+/**
+ * Applet class
+ *
+ * @author <user>
+ */
+@StringPool(value = { @StringDef(name = "Package", value = "com.recap"),
+		@StringDef(name = "AppletName", value = "_06_JCAppDES") },
+		// Insert your strings here
+		name = "_06_JCAppDESStrings")
+public class _06_JCAppDES extends Applet {
+
+	/**
+	 * Installs this applet.
+	 *
+	 * @param bArray  the array containing installation parameters
+	 * @param bOffset the starting offset in bArray
+	 * @param bLength the length in bytes of the parameter data in bArray
+	 */
+	static final byte CLA_DES = (byte) 0x80;
+	static final byte INS_SET_IV = (byte) 0x10;
+	static final byte INS_SET_KEY = (byte) 0x20;
+	static final byte INS_ENCRYPT = (byte) 0x30;
+	static final byte INS_DECRYPT = (byte) 0x40;
+
+	static Cipher cipher;
+	static DESKey key;
+	static byte[] iv;
+
+	public static void install(byte[] bArray, short bOffset, byte bLength) {
+		new _06_JCAppDES();
+	}
+
+	/**
+	 * Only this class's install method should create the applet object.
+	 */
+	protected _06_JCAppDES() {
+		cipher = Cipher.getInstance(Cipher.ALG_DES_CBC_ISO9797_M2, false);
+		key = (DESKey) KeyBuilder.buildKey(KeyBuilder.TYPE_DES_TRANSIENT_DESELECT, KeyBuilder.LENGTH_DES, false);
+		iv = JCSystem.makeTransientByteArray((short) 8, JCSystem.CLEAR_ON_DESELECT);
+		register();
+	}
+
+	/**
+	 * Processes an incoming APDU.
+	 *
+	 * @see APDU
+	 * @param apdu the incoming APDU
+	 */
+	@Override
+	public void process(APDU apdu) {
+		if (selectingApplet())
+			return;
+
+		byte[] buffer = apdu.getBuffer();
+
+		if (buffer[ISO7816.OFFSET_CLA] != CLA_DES)
+			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+
+		short len = apdu.setIncomingAndReceive();
+
+		switch (buffer[ISO7816.OFFSET_INS]) {
+		case INS_SET_IV:
+			setIV(apdu, len);
+			break;
+		case INS_SET_KEY:
+			setKey(apdu, len);
+			break;
+		case INS_ENCRYPT:
+			encrypt(apdu, len);
+			break;
+		case INS_DECRYPT:
+			decrypt(apdu, len);
+			break;
+		default:
+			ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+		}
+	}
+
+	private void setIV(APDU apdu, short len) {
+		byte[] buffer = apdu.getBuffer();
+
+		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, iv, (short) 0, len);
+
+		apdu.setOutgoingAndSend(ISO7816.OFFSET_CDATA, len);
+	}
+
+	private void setKey(APDU apdu, short len) {
+		byte[] buffer = apdu.getBuffer();
+
+		key.setKey(buffer, (short) ISO7816.OFFSET_CDATA);
+
+		apdu.setOutgoingAndSend(ISO7816.OFFSET_CDATA, len);
+	}
+
+	private void encrypt(APDU apdu, short len) {
+		byte[] buffer = apdu.getBuffer();
+
+		cipher.init(key, Cipher.MODE_ENCRYPT, iv, (short) 0, (short) 8);
+
+		short cipherTextLength = cipher.doFinal(buffer, ISO7816.OFFSET_CDATA, len, buffer, (short) 0);
+		apdu.setOutgoingAndSend((short) 0, cipherTextLength);
+	}
+
+	private void decrypt(APDU apdu, short len) {
+		byte[] buffer = apdu.getBuffer();
+
+		cipher.init(key, Cipher.MODE_DECRYPT, iv, (short) 0, (short) 8);
+
+		short plaintextLength = cipher.doFinal(buffer, ISO7816.OFFSET_CDATA, len, buffer, (short) 0);
+		apdu.setOutgoingAndSend((short) 0, plaintextLength);
+	}
+}
+
+```
+
+#### 6.2 \_06_JCAppDES.script
+
+```
+// Copyright (c) 1998, 2021, Oracle and/or its affiliates. All rights reserved.
+
+// Applet Selection APDU Script
+//
+// Package:     _06_JCAppDES.com.recap
+// Package AID: //aid/0102030405/
+// Applet:      com.recap._06_JCAppDES
+// Applet AID:  //aid/0102030405/01
+//
+
+// Select com.recap._06_JCAppDES applet
+0x00 0xA4 0x04 0x00 0x06 0x01 0x02 0x03 0x04 0x05 0x01 0x7F;
+// Set IV
+0x80 0x10 0x00 0x00 0x08 0x00 0x01 0x02 0x03 0x04 0x05 0x06 0x07 0x08;
+
+// Set Key
+0x80 0x20 0x00 0x00 0x08 0x07 0x06 0x05 0x04 0x03 0x02 0x01 0x00 0x08;
+
+// Encrypt the text "hellohereiamgood"
+0x80 0x30 0x00 0x00 0x10 0x68 0x65 0x6c 0x6c 0x6f 0x68 0x65 0x72 0x65 0x69 0x61 0x6d 0x67 0x6f 0x6f 0x64 0x10;
+
+// Decrypt the ciphertext of "hellohereiamgood"
+0x80 0x40 0x00 0x00 0x18 0xd7 0x3d 0x78 0x98 0x5c 0x1b 0xb9 0x60 0x72 0xb6 0x78 0xaf 0x78 0xb3 0x38 0x92 0xcd 0x36 0x28 0xf0 0xd9 0xff 0x1e 0x45 0x10;
+
+
+```
+
+---
+
+## 7) E-Wallet
+
+#### 7.1 \_07_JCAppEWallet.java
 
 ```
 
 ```
 
-#### 6.2 \_05_JCAppDES.script
+#### 7.2 \_07_JCAppEWallet.script
 
 ```
 
