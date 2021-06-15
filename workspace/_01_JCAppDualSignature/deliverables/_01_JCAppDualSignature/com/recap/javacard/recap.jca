@@ -1,5 +1,5 @@
 // converted by version  [v3.1.0]
-// on Tue Jun 15 10:51:50 EEST 2021
+// on Tue Jun 15 14:17:13 EEST 2021
 
 .package com/recap {
 	.aid 0x1:0x2:0x3:0x4:0x5;
@@ -7,6 +7,7 @@
 
 	.imports {
 		0xA0:0x0:0x0:0x0:0x62:0x1:0x1 1.8;		//javacard/framework
+		0xA0:0x0:0x0:0x0:0x62:0x1:0x2 1.7;		//javacard/security
 		0xA0:0x0:0x0:0x0:0x62:0x0:0x1 1.0;		//java/lang
 	}
 
@@ -22,18 +23,100 @@
 		// 2
 		staticMethodRef 0.3.0()V;		// javacard/framework/Applet.<init>()V
 		// 3
-		virtualMethodRef 0.3.1()V;		// register()V
+		staticMethodRef 1.15.0(BZ)Ljavacard/security/Signature;;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+			.descriptor	Ljavacard/security/Signature;	1.15;
+
 		// 4
-		virtualMethodRef 0.10.1()[B;		// getBuffer()[B
+		staticFieldRef 1.15 _01_JCAppDualSignature/sign;
 		// 5
-		virtualMethodRef 0.3.3()Z;		// selectingApplet()Z
+		staticMethodRef 0.8.13(SB)[B;		// javacard/framework/JCSystem.makeTransientByteArray(SB)[B
 		// 6
-		staticMethodRef 1.0.0()V;		// java/lang/Object.<init>()V
+		staticFieldRef byte[] _01_JCAppDualSignature/verifySignatureBuffer;
+		// 7
+		virtualMethodRef 0.3.1()V;		// register()V
+		// 8
+		virtualMethodRef 0.3.3()Z;		// selectingApplet()Z
+		// 9
+		virtualMethodRef 0.10.1()[B;		// getBuffer()[B
+		// 10
+		staticMethodRef 0.7.1(S)V;		// javacard/framework/ISOException.throwIt(S)V
+		// 11
+		virtualMethodRef 0.10.6()S;		// setIncomingAndReceive()S
+		// 12
+		virtualMethodRef _01_JCAppDualSignature/generateKeys(Ljavacard/framework/APDU;S)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 13
+		virtualMethodRef _01_JCAppDualSignature/sign(Ljavacard/framework/APDU;S)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 14
+		virtualMethodRef _01_JCAppDualSignature/verify(Ljavacard/framework/APDU;S)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 15
+		.classRef 1.16;		// javacard/security/KeyPair
+		// 16
+		staticMethodRef 1.16.0(BS)V;		// javacard/security/KeyPair.<init>(BS)V
+		// 17
+		virtualMethodRef 1.16.3()Ljavacard/security/PublicKey;;		// getPublic()Ljavacard/security/PublicKey;
+			.descriptor	Ljavacard/security/PublicKey;	1.3;
+
+		// 18
+		.classRef 1.9;		// javacard/security/RSAPublicKey
+		// 19
+		virtualMethodRef 1.16.2()Ljavacard/security/PrivateKey;;		// getPrivate()Ljavacard/security/PrivateKey;
+			.descriptor	Ljavacard/security/PrivateKey;	1.2;
+
+		// 20
+		.classRef 1.8;		// javacard/security/RSAPrivateKey
+		// 21
+		virtualMethodRef 1.16.1()V;		// genKeyPair()V
+		// 22
+		staticFieldRef 1.9 _01_JCAppDualSignature/publicKey;
+		// 23
+		staticFieldRef 1.8 _01_JCAppDualSignature/privateKey;
+		// 24
+		virtualMethodRef 0.10.8(SS)V;		// setOutgoingAndSend(SS)V
+		// 25
+		virtualMethodRef 1.15.3(Ljavacard/security/Key;B)V;		// init(Ljavacard/security/Key;B)V
+			.descriptor	Ljavacard/security/Key;	1.0;
+
+		// 26
+		virtualMethodRef 1.15.6([BSS)V;		// update([BSS)V
+		// 27
+		virtualMethodRef 1.15.5([BSS[BS)S;		// sign([BSS[BS)S
+		// 28
+		virtualMethodRef 0.10.7()S;		// setOutgoing()S
+		// 29
+		virtualMethodRef 0.10.9(S)V;		// setOutgoingLength(S)V
+		// 30
+		virtualMethodRef 0.10.5([BSS)V;		// sendBytesLong([BSS)V
+		// 31
+		staticFieldRef short _01_JCAppDualSignature/offsetInVerifySignature;
+		// 32
+		staticMethodRef 0.16.1([BS[BSS)S;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+		// 33
+		virtualMethodRef 1.15.7([BSS[BSS)Z;		// verify([BSS[BSS)Z
+		// 34
+		staticMethodRef 2.0.0()V;		// java/lang/Object.<init>()V
 	}
 
 	.class public _01_JCAppDualSignature 0 extends 0.3 {		// extends javacard/framework/Applet
 
-		.publicMethodTable 7 8 {
+		.fields {
+			static final byte CLA_DUAL_SIGNATURE = -128;		// B
+			static final byte INS_GEN_KEYS = 16;		// B
+			static final byte INS_SIGN = 32;		// B
+			static final byte INS_VERIFY = 48;		// B
+			static byte[] verifySignatureBuffer;		// [B
+			static short offsetInVerifySignature;		// S
+			static 1.9 publicKey;		// Ljavacard/security/RSAPublicKey;
+			static 1.8 privateKey;		// Ljavacard/security/RSAPrivateKey;
+			static 1.15 sign;		// Ljavacard/security/Signature;
+		}
+
+		.publicMethodTable 7 11 {
 			equals(Ljava/lang/Object;)Z 0;
 			register()V 1;
 			register([BSB)V 2;
@@ -42,6 +125,9 @@
 			getShareableInterfaceObject(Ljavacard/framework/AID;B)Ljavacard/framework/Shareable; 5;
 			select()Z 6;
 			process(Ljavacard/framework/APDU;)V 7;
+			generateKeys(Ljavacard/framework/APDU;S)V 255;
+			sign(Ljavacard/framework/APDU;S)V 255;
+			verify(Ljavacard/framework/APDU;S)V 255;
 		}
 
 		.packageMethodTable 0 {
@@ -57,35 +143,294 @@
 		}
 
 		.method protected <init>()V 1 {
-			.stack 1;
+			.stack 2;
 			.locals 0;
 
 				L0:	aload_0;
 					invokespecial 2;		// javacard/framework/Applet.<init>()V
+					bspush 10;
+					sconst_0;
+					invokestatic 3;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+					putstatic_a 4;		// reference com/recap/_01_JCAppDualSignature.sign
+					sspush 512;
+					sconst_2;
+					invokestatic 5;		// javacard/framework/JCSystem.makeTransientByteArray(SB)[B
+					putstatic_a 6;		// reference com/recap/_01_JCAppDualSignature.verifySignatureBuffer
 					aload_0;
-					invokevirtual 3;		// register()V
+					invokevirtual 7;		// register()V
 					return;
 		}
 
 		.method public process(Ljavacard/framework/APDU;)V 7 {
-			.stack 1;
-			.locals 1;
+			.stack 3;
+			.locals 2;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_0;
+					invokevirtual 8;		// selectingApplet()Z
+					ifeq L2;
+				L1:	return;
+				L2:	aload_1;
+					invokevirtual 9;		// getBuffer()[B
+					astore_2;
+				L3:	aload_2;
+					sconst_0;
+					baload;
+					bspush -128;
+					if_scmpeq L5;
+				L4:	sspush 28160;
+					invokestatic 10;		// javacard/framework/ISOException.throwIt(S)V
+				L5:	aload_1;
+					invokevirtual 11;		// setIncomingAndReceive()S
+					sstore_3;
+				L6:	aload_2;
+					sconst_1;
+					baload;
+					slookupswitch L10 3 16 L7 32 L8 48 L9;
+				L7:	aload_0;
+					aload_1;
+					sload_3;
+					invokevirtual 12;		// generateKeys(Ljavacard/framework/APDU;S)V
+					goto L11;
+				L8:	aload_0;
+					aload_1;
+					sload_3;
+					invokevirtual 13;		// sign(Ljavacard/framework/APDU;S)V
+					goto L11;
+				L9:	aload_0;
+					aload_1;
+					sload_3;
+					invokevirtual 14;		// verify(Ljavacard/framework/APDU;S)V
+					goto L11;
+				L10:	sspush 27904;
+					invokestatic 10;		// javacard/framework/ISOException.throwIt(S)V
+				L11:	return;
+		}
+
+		.method public generateKeys(Ljavacard/framework/APDU;S)V 8 {
+			.stack 4;
+			.locals 5;
 
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 				L0:	aload_1;
-					invokevirtual 4;		// getBuffer()[B
-					astore_2;
-				L1:	aload_0;
-					invokevirtual 5;		// selectingApplet()Z
+					invokevirtual 9;		// getBuffer()[B
+					astore_3;
+				L1:	sconst_0;
+					sstore 4;
+				L2:	aload_3;
+					sconst_2;
+					baload;
+					stableswitch L7 1 4 L3 L4 L5 L6;
+				L3:	sspush 512;
+					sstore 4;
+					goto L8;
+				L4:	sspush 1024;
+					sstore 4;
+					goto L8;
+				L5:	sspush 2048;
+					sstore 4;
+					goto L8;
+				L6:	sspush 4096;
+					sstore 4;
+					goto L8;
+				L7:	sspush 27270;
+					invokestatic 10;		// javacard/framework/ISOException.throwIt(S)V
+				L8:	new 15;		// javacard/security/KeyPair
+					dup;
+					sconst_1;
+					sload 4;
+					invokespecial 16;		// javacard/security/KeyPair.<init>(BS)V
+					astore 5;
+				L9:	aload 5;
+					invokevirtual 17;		// getPublic()Ljavacard/security/PublicKey;
+					checkcast 0 18;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					astore 6;
+				L10:	aload 5;
+					invokevirtual 19;		// getPrivate()Ljavacard/security/PrivateKey;
+					checkcast 0 20;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
+					astore 7;
+				L11:	aload 6;
+					aload_3;
+					sconst_5;
+					sload_2;
+					invokeinterface 4 18 6;		// javacard/security/RSAPublicKey
+					aload 5;
+					invokevirtual 21;		// genKeyPair()V
+					aload 6;
+					putstatic_a 22;		// reference com/recap/_01_JCAppDualSignature.publicKey
+					aload 7;
+					putstatic_a 23;		// reference com/recap/_01_JCAppDualSignature.privateKey
+					aload_1;
+					sconst_5;
+					sload_2;
+					invokevirtual 24;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method public sign(Ljavacard/framework/APDU;S)V 9 {
+			.stack 6;
+			.locals 5;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 9;		// getBuffer()[B
+					astore_3;
+				L1:	getstatic_a 4;		// reference com/recap/_01_JCAppDualSignature.sign
+					getstatic_a 23;		// reference com/recap/_01_JCAppDualSignature.privateKey
+					sconst_1;
+					invokevirtual 25;		// init(Ljavacard/security/Key;B)V
+					aload_3;
+					sconst_2;
+					baload;
+					sspush 128;
+					sand;
 					ifeq L3;
-				L2:	return;
-				L3:	return;
+				L2:	sconst_1;
+					goto L4;
+				L3:	sconst_0;
+				L4:	sstore 4;
+				L5:	sload 4;
+					ifeq L7;
+				L6:	getstatic_a 4;		// reference com/recap/_01_JCAppDualSignature.sign
+					aload_3;
+					sconst_5;
+					sload_2;
+					invokevirtual 26;		// update([BSS)V
+					goto L16;
+				L7:	getstatic_a 4;		// reference com/recap/_01_JCAppDualSignature.sign
+					aload_3;
+					sconst_5;
+					sload_2;
+					getstatic_a 6;		// reference com/recap/_01_JCAppDualSignature.verifySignatureBuffer
+					sconst_0;
+					invokevirtual 27;		// sign([BSS[BS)S
+					sstore 5;
+				L8:	aload_1;
+					invokevirtual 28;		// setOutgoing()S
+					pop;
+					aload_1;
+					sload 5;
+					invokevirtual 29;		// setOutgoingLength(S)V
+					sconst_0;
+					sstore 6;
+				L9:	goto L15;
+				L10:	sload 5;
+					bspush 64;
+					if_scmpge L12;
+				L11:	sload 5;
+					goto L13;
+				L12:	bspush 64;
+				L13:	sstore 7;
+				L14:	aload_1;
+					getstatic_a 6;		// reference com/recap/_01_JCAppDualSignature.verifySignatureBuffer
+					sload 6;
+					sload 7;
+					invokevirtual 30;		// sendBytesLong([BSS)V
+					sload 6;
+					sload 7;
+					sadd;
+					sstore 6;
+					sload 5;
+					sload 7;
+					ssub;
+					sstore 5;
+				L15:	sload 5;
+					ifgt L10;
+				L16:	return;
+		}
+
+		.method public verify(Ljavacard/framework/APDU;S)V 10 {
+			.stack 8;
+			.locals 5;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 9;		// getBuffer()[B
+					astore_3;
+				L1:	getstatic_a 4;		// reference com/recap/_01_JCAppDualSignature.sign
+					getstatic_a 22;		// reference com/recap/_01_JCAppDualSignature.publicKey
+					sconst_2;
+					invokevirtual 25;		// init(Ljavacard/security/Key;B)V
+					aload_3;
+					sconst_2;
+					baload;
+					sspush 128;
+					sand;
+					ifeq L3;
+				L2:	sconst_1;
+					goto L4;
+				L3:	sconst_0;
+				L4:	sstore 4;
+				L5:	aload_3;
+					sconst_3;
+					baload;
+					sconst_1;
+					sand;
+					ifeq L7;
+				L6:	sconst_1;
+					goto L8;
+				L7:	sconst_0;
+				L8:	sstore 5;
+				L9:	sload 4;
+					ifeq L13;
+				L10:	sload 5;
+					ifeq L12;
+				L11:	aload_3;
+					sconst_5;
+					getstatic_a 6;		// reference com/recap/_01_JCAppDualSignature.verifySignatureBuffer
+					getstatic_s 31;		// short com/recap/_01_JCAppDualSignature.offsetInVerifySignature
+					sload_2;
+					invokestatic 32;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getstatic_s 31;		// short com/recap/_01_JCAppDualSignature.offsetInVerifySignature
+					sload_2;
+					sadd;
+					putstatic_s 31;		// short com/recap/_01_JCAppDualSignature.offsetInVerifySignature
+					goto L19;
+				L12:	getstatic_a 4;		// reference com/recap/_01_JCAppDualSignature.sign
+					aload_3;
+					sconst_5;
+					sload_2;
+					invokevirtual 26;		// update([BSS)V
+					goto L19;
+				L13:	getstatic_a 4;		// reference com/recap/_01_JCAppDualSignature.sign
+					aload_3;
+					sconst_5;
+					sload_2;
+					getstatic_a 6;		// reference com/recap/_01_JCAppDualSignature.verifySignatureBuffer
+					sconst_0;
+					getstatic_a 22;		// reference com/recap/_01_JCAppDualSignature.publicKey
+					invokeinterface 1 18 1;		// javacard/security/RSAPublicKey
+					bspush 8;
+					sdiv;
+					invokevirtual 33;		// verify([BSS[BSS)Z
+					sstore 6;
+				L14:	sload 6;
+					ifeq L16;
+				L15:	sconst_1;
+					goto L17;
+				L16:	sconst_0;
+				L17:	sstore 7;
+				L18:	aload_3;
+					sconst_0;
+					sload 7;
+					bastore;
+					sconst_0;
+					putstatic_s 31;		// short com/recap/_01_JCAppDualSignature.offsetInVerifySignature
+					aload_1;
+					sconst_0;
+					sconst_1;
+					invokevirtual 24;		// setOutgoingAndSend(SS)V
+				L19:	return;
 		}
 
 	}
 
-	.class final _01_JCAppDualSignatureStrings extends 1.0 {		// extends java/lang/Object
+	.class final _01_JCAppDualSignatureStrings extends 2.0 {		// extends java/lang/Object
 
 		.fields {
 			static final byte[] Package = {99,111,109,46,114,101,99,97,112};		// [B
@@ -104,7 +449,7 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 6;		// java/lang/Object.<init>()V
+					invokespecial 34;		// java/lang/Object.<init>()V
 					return;
 		}
 
