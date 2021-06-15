@@ -10,10 +10,43 @@
 
 ---
 
+#### Applet steps:
+
+![APDU Structure](appletsteps)
+
+---
+
+Constraints:
+
+![APDU Structure](JCVMlimitations)
+![APDU Structure](framework1)
+
+---
+
+#### Java Card API
+
+![APDU Structure](framework2)
+
+##### Java Card API – javacard.framework.\*
+
+![APDU Structure](framework3)
+
+##### Java Card API – javacard.framework.service.\*
+
+![APDU Structure](framework4)
+
+##### Java Card API – javacard.security.\*
+
+![APDU Structure](framework5)
+
+---
+
 #### APDU structure:
 
 ![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/APDU%20request%20%26%20response%20structure.jpg)
 ![APDU Structure 2](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/APDU%20Structure%202.png)
+
+---
 
 #### JavaCard Cryptography:
 
@@ -22,6 +55,8 @@
 ![Page 3](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_003.png)
 ![Page 4](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_004.png)
 ![Page 5](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_005.png)
+
+---
 
 <object data="https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/E%20Pay%20Course%20FULL.pdf" type="application/pdf" width="700px" height="700px">
     <embed src="https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/E%20Pay%20Course%20FULL.pdf">
