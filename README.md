@@ -140,6 +140,6 @@ Apdu.setOutgoingAndSend(mVerify, (short) 0);
 
 <object data="https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/E%20Pay%20Course%20FULL.pdf" type="application/pdf" width="700px" height="700px">
     <embed src="https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/E%20Pay%20Course%20FULL.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/E%20Pay%20Course%20FULL.pdf">Download PDF</a>.</p>
+        <p>This browser does not support PDFs. See the  PDF course  <a href="https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/E%20Pay%20Course%20FULL.pdf">here</a>.</p>
     </embed>
 </object>
