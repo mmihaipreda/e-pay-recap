@@ -512,9 +512,9 @@ public class _02_JCAppHMAC extends Applet {
 
 ---
 
-## 3) RSA verify
+## 3) AES CBC encryption
 
-#### 3.1 \_03_JCAppRSAVerify.java
+#### 3.1 \_03_JCAppAES_CBC.java
 
 ```
 Signature sign = Signature.getInstance(Signature.ALG_RSA_SHA_PKCS1, false)
@@ -523,7 +523,7 @@ short len = sign.Verify(buffer, ISO7816.OFFSSET_CDATA, len, buffer, (short) 0)
 
 ```
 
-#### 3.2 select-com.recap.com.recap.\_03_JCAppRSAVerify.script
+#### 3.2 select-com.recap.com.recap.\_03_JCAppAES_CBC.script
 
 ```
 // Copyright (c) 1998, 2021, Oracle and/or its affiliates. All rights reserved.
@@ -542,9 +542,9 @@ short len = sign.Verify(buffer, ISO7816.OFFSSET_CDATA, len, buffer, (short) 0)
 
 ---
 
-## 4) Signature verification
+## 4) MD5 hashing
 
-#### 4.1 \_04_JCAppSignatureVerification.java
+#### 4.1 \_04_JCAppHashMD5.java
 
 ```
 Key pub = KeyBuilder.buildKey(Keybuilder.TYPE_RSA_PUBLIC, Keybuilder.LENGTH_RSA_1024, false)
@@ -558,7 +558,7 @@ Boolean mVerify = mSign.verify(buffer, ISO7816.OFFSET_CDATA, datalen, buffer, (s
 Apdu.setOutgoingAndSend(mVerify, (short) 0);
 ```
 
-#### 4.2 select-com.recap.com.recap.\_04_JCAppSignatureVerification.script
+#### 4.2 select-com.recap.com.recap.\_04_JCAppHashMD5.script
 
 ```
 // Copyright (c) 1998, 2021, Oracle and/or its affiliates. All rights reserved.
