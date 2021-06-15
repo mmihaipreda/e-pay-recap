@@ -41,12 +41,13 @@ public class _07_JCAppEWallet extends Applet {
 	static final short SW_EXCEED_MAXIMUM_BALANCE = 0x6325;
 	static final short SW_NEGATIVE_BALANCE = 0x6326;
 
-	static final byte PIN_SIZE_LIMIT = (byte) 0x04;
+	static final byte PIN_SIZE_LIMIT = (byte) 0x08;
 	static final byte PIN_TRY_LIMIT = (byte) 0x03;
-	static final short MAX_BALANCE = 0x7FFF;
-	static final byte MAX_TRANSACTION_AMOUNT = 127;
 	OwnerPIN pin;
-	final byte[] correctPin = new byte[] { 0x01, 0x02, 0x03, 0x04 };
+	byte[] correctPin = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
+
+	final static short MAX_BALANCE = 0x7FFF;
+	final static byte MAX_TRANSACTION_AMOUNT = 127;
 	short balance;
 
 	public static void install(byte[] bArray, short bOffset, byte bLength) {
@@ -59,8 +60,8 @@ public class _07_JCAppEWallet extends Applet {
 	protected _07_JCAppEWallet() {
 		pin = new OwnerPIN(PIN_TRY_LIMIT, PIN_SIZE_LIMIT);
 
-		pin.update(correctPin, (short) 0, (byte) 0x04);
-		balance = 0;
+		pin.update(correctPin, (short) 0, (byte) correctPin.length);
+		balance = (short) 0x00;
 		register();
 	}
 
@@ -90,36 +91,34 @@ public class _07_JCAppEWallet extends Applet {
 		if (buffer[ISO7816.OFFSET_CLA] != CLA_WALLET)
 			ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
 
-		short len = apdu.setIncomingAndReceive();
-
 		switch (buffer[ISO7816.OFFSET_INS]) {
 		case INS_VERIFY_PIN:
-			verifyPin(apdu, len);
+			verifyPin(apdu);
 			break;
 		case INS_DEPOSIT:
-			deposit(apdu, len);
+			deposit(apdu);
 			break;
 		case INS_WITHDRAW:
-			withdraw(apdu, len);
+			withdraw(apdu);
 			break;
 		case INS_GET_BALANCE:
-			getBalance(apdu, len);
+			getBalance(apdu);
 			break;
 		default:
 			ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
 		}
 	}
 
-	private void verifyPin(APDU apdu, short len) {
+	private void verifyPin(APDU apdu) {
 		byte[] buffer = apdu.getBuffer();
+		short len = apdu.setIncomingAndReceive();
 
 		if (!pin.check(buffer, ISO7816.OFFSET_CDATA, (byte) len)) {
 			ISOException.throwIt(SW_INCORRECT_PIN);
 		}
-
 	}
 
-	private void deposit(APDU apdu, short len) {
+	private void deposit(APDU apdu) {
 
 		if (!pin.isValidated())
 			ISOException.throwIt(SW_PIN_NOT_VALIDATED);
@@ -127,6 +126,7 @@ public class _07_JCAppEWallet extends Applet {
 		byte[] buffer = apdu.getBuffer();
 
 		byte Lc = buffer[ISO7816.OFFSET_LC];
+		short len = apdu.setIncomingAndReceive();
 
 		if ((Lc != 1) || (len != 1)) {
 			ISOException.throwIt(SW_WRONG_LENGTH);
@@ -147,13 +147,14 @@ public class _07_JCAppEWallet extends Applet {
 		balance += (short) depositAmount;
 	}
 
-	private void withdraw(APDU apdu, short len) {
+	private void withdraw(APDU apdu) {
 		if (!pin.isValidated())
 			ISOException.throwIt(SW_PIN_NOT_VALIDATED);
 
 		byte[] buffer = apdu.getBuffer();
 
 		byte Lc = buffer[ISO7816.OFFSET_LC];
+		short len = apdu.setIncomingAndReceive();
 
 		if ((Lc != 1) || (len != 1))
 			ISOException.throwIt(SW_WRONG_LENGTH);
@@ -169,7 +170,7 @@ public class _07_JCAppEWallet extends Applet {
 		balance -= (short) withdrawAmount;
 	}
 
-	private void getBalance(APDU apdu, short len) {
+	private void getBalance(APDU apdu) {
 		if (!pin.isValidated())
 			ISOException.throwIt(SW_PIN_NOT_VALIDATED);
 
@@ -180,12 +181,12 @@ public class _07_JCAppEWallet extends Applet {
 		if (Le < 2)
 			ISOException.throwIt(SW_WRONG_LENGTH);
 
-		apdu.setOutgoingLength((short) 2);
+		apdu.setOutgoingLength((byte) 2);
 
 		// balance looks like 0x0104 => we now get 0x01.
 		buffer[0] = (byte) (balance >> 8);
 		// Get the least significant byte value.
-		buffer[1] = (byte) (balance & 0x00FF);
+		buffer[1] = (byte) (balance & 0xFF);
 
 		apdu.sendBytes((short) 0, (short) 2);
 	}
