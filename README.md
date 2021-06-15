@@ -11,6 +11,7 @@
 ---
 
 ![APDU Structure](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/APDU%20request%20%26%20response%20structure.jpg)
+![APDU Structure 2](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/APDU%20Structure%202.png)
 ![Page 1](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_001.png)
 ![Page 2](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_002.png)
 ![Page 3](https://github.com/mmihaipreda/e-pay-recap/blob/master/theory/JavaCard_Cryptography_003.png)
