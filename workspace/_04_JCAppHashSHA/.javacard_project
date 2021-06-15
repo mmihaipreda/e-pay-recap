@@ -14,7 +14,7 @@
         </value>
     </entries>
     <entries>
-        <key>src/com/recap/_04_JCAppHashMD5.java</key>
+        <key>src/com/recap/_04_JCAppHashSHA.java</key>
         <value>
             <entry>
                 <key xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">AID</key>
