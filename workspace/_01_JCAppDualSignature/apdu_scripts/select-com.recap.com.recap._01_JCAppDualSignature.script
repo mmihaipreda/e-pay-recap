@@ -1,0 +1,12 @@
+// Copyright (c) 1998, 2021, Oracle and/or its affiliates. All rights reserved.
+
+// Applet Selection APDU Script
+//
+// Package:     _01_JCAppDualSignature.com.recap
+// Package AID: //aid/0102030405/
+// Applet:      com.recap._01_JCAppDualSignature
+// Applet AID:  //aid/0102030405/01
+//
+
+// Select com.recap._01_JCAppDualSignature applet
+0x00 0xA4 0x04 0x00 0x06 0x01 0x02 0x03 0x04 0x05 0x01 0x7F;

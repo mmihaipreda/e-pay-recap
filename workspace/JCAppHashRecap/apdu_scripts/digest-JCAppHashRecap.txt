@@ -1,0 +1,12 @@
+Digest for com/recap/hash/javacard/Debug.cap		[SHA-256: 207ae363a4c6338e045dcacc153712d9ba0a6636f0e59d97ffc78ddaa38c4855]
+Digest for com/recap/hash/javacard/RefLocation.cap		[SHA-256: de6a208cd6c29290b1c72ad125256da00692a3b0c505934190d576760463c41d]
+Digest for com/recap/hash/javacard/Directory.cap		[SHA-256: 00aa006f5126d2c0e16031e7a3591c2d3f3dd645ad73ec2bfd1ea84d1028cc7a]
+Digest for com/recap/hash/javacard/Applet.cap		[SHA-256: 937684816fa5b3a87acd3e0278863ffaca75a84e045d42ffb693c9281b7e59bb]
+Digest for com/recap/hash/javacard/Method.cap		[SHA-256: 9ff1c1ab6529f17080592bf80fbec278bc1d0b1ff3d0baa8e6eb95935185c08c]
+Digest for com/recap/hash/javacard/Class.cap		[SHA-256: 7c337ba445cf0d4b398731542751bb6b89305fcaca2a7b2f087276885b886170]
+Digest for com/recap/hash/javacard/Descriptor.cap		[SHA-256: 0f7a2653edd92c8dbbca5bd98b32bb847ec635537ba74e68726b330ca9857621]
+Digest for com/recap/hash/javacard/Header.cap		[SHA-256: 431ef86d5a0b4052acab93b377e4bdf6a1f19b5690cceb6d3c64a9c6f30eb9e6]
+Digest for com/recap/hash/javacard/ConstantPool.cap		[SHA-256: c3544fe70223d3006bb1206e428280846b19ce94e909d6ec3f0a8bf8c6004bc7]
+Digest for com/recap/hash/javacard/Import.cap		[SHA-256: 108de88f984f11432e4e9f5830148882b1450a28aa1e0e0205d234e445cf3e2d]
+Digest for com/recap/hash/javacard/StaticField.cap		[SHA-256: c3910e24fd72cef7c25d9107413efa0590a997efe6e63ab27225a92e1a107a65]
+Verification completed with 0 warnings and 0 errors.
