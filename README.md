@@ -2,7 +2,7 @@
 
 ---
 
-#### Bref theoretical concept about JavaCard™ and implementation examples of common uses of JavaCard™
+#### Bref theoretical concepts about JavaCard™ and implementation examples of common uses of JavaCard™
 
 ---
 
